@@ -13,8 +13,13 @@
     <link rel="icon" type="image/x-icon" href="favicon2.ico">
 </head>
 <body>
-    <p>Songzy 0.0.4</p>
-
+    <p>Songzy 0.0.5</p>
+    
+    <form id="loginForm">
+      <input type="email" id="emailInput" placeholder="Email" required><br>
+      <input type="password" id="passwordInput" placeholder="Password" required><br>
+      <button type="submit">Login</button>
+    </form>
 
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
@@ -23,22 +28,25 @@
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
 
     <script>
-      // Your Firebase Config (Replace with your actual Firebase config)
-      var firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_AUTH_DOMAIN",
-        projectId: "YOUR_PROJECT_ID"
-        // Add more config if needed
-      };
-      
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-
       const loginForm = document.getElementById('loginForm');
       loginForm.addEventListener('submit', (e) => {
         e.preventDefault(); // Prevent default form submission
         const email = document.getElementById('emailInput').value;
         const password = document.getElementById('passwordInput').value;
+
+        // Firebase Configuration
+        var firebaseConfig = {
+          apiKey: "YOUR_API_KEY",
+          authDomain: "YOUR_AUTH_DOMAIN",
+          projectId: "YOUR_PROJECT_ID"
+          // Add more config if needed
+        };
+
+        // Check if Firebase app is not already initialized
+        if (!firebase.apps.length) {
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+        }
 
         // Firebase Authentication
         firebase.auth().signInWithEmailAndPassword(email, password)
@@ -57,12 +65,5 @@
           });
       });
     </script>
-    
-    <form id="loginForm">
-      <input type="email" id="emailInput" placeholder="Email" required><br>
-      <input type="password" id="passwordInput" placeholder="Password" required><br>
-      <button type="submit">Login</button>
-    </form>
-    
 </body>
 </html>
